@@ -2,7 +2,8 @@
 const isProduction: boolean = process.env.NODE_ENV === 'production';
 
 export default (condition: mixed, message: string) => {
-  // wrapping entire block for better dead code elimination
+  // don't do anything in production
+  // wrapping in production check for better dead code elimination
   if (!isProduction) {
     // condition passed: do not log
     if (condition) {
