@@ -17,7 +17,7 @@ it('should not log a warning if the condition is truthy', () => {
   });
 });
 
-it('should throw if the condition is falsy', () => {
+it('should log a warning if the condition is falsy', () => {
   // https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch4.md#falsy-values
   const falsy: mixed[] = [undefined, null, false, +0, -0, NaN, ''];
   falsy.forEach((value: mixed) => {
