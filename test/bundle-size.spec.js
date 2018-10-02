@@ -13,11 +13,7 @@ const getCode = async ({ mode }): Promise<string> => {
       format: 'esm',
     },
     plugins: [
-      babel({
-        babelrc: false,
-        presets: ['flow', ['env', { modules: false, loose: true }]],
-        comments: false,
-      }),
+      babel(),
       replace({ 'process.env.NODE_ENV': JSON.stringify(mode) }),
     ],
   });
