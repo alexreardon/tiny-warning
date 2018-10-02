@@ -1,9 +1,55 @@
-# Tiny warning 🔬💥
+import babel from 'rollup-plugin-babel';
+import replace from 'rollup-plugin-replace';
+import { uglify } from 'rollup-plugin-uglify';
+import pkg from './package.json';
 
-[![Build Status](https://travis-ci.org/alexreardon/tiny-warning.svg?branch=master)](https://travis-ci.org/alexreardon/tiny-warning)
-[![npm](https://img.shields.io/npm/v/tiny-warning.svg)](https://www.npmjs.com/package/tiny-warning) [![dependencies](https://david-dm.org/alexreardon/tiny-warning.svg)](https://david-dm.org/alexreardon/tiny-warning)
-[![min](https://img.shields.io/bundlephobia/min/tiny-warning.svg)](https://www.npmjs.com/package/tiny-warning)
-[![minzip](https://img.shields.io/bundlephobia/minzip/tiny-warning.svg)](https://www.npmjs.com/package/tiny-warning)
+const input = 'src/index.js';
 
-A tiny [`warning`](https://www.npmjs.com/package/warning) alternative.
-
+export default [
+  // ESM build
+  {
+    input,
+    output: {
+      file: pkg.module,
+      format: 'esm',
+    },
+    plugins: [babel()],
+  },
+  // CommonJS build
+  {
+    input,
+    output: {
+      file: pkg.main,
+      format: 'cjs',
+    },
+    plugins: [babel()],
+  },
+  // UMD: Production build
+  {
+    input,
+    output: {
+      file: 'dist/tiny-warning.js',
+      format: 'umd',
+      name: 'warning',
+    },
+    plugins: [
+      // Setting development env before running babel etc
+      replace({ 'process.env.NODE_ENV': JSON.stringify('development') }),
+      babel(),
+    ],
+  },
+  {
+    input,
+    output: {
+      file: 'dist/tiny-warning.min.js',
+      format: 'umd',
+      name: 'warning',
+    },
+    plugins: [
+      // Setting development env before running babel etc
+      replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
+      babel(),
+      uglify(),
+    ],
+  },
+];
