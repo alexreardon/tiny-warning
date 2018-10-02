@@ -21,6 +21,10 @@ warning(falsyValue, 'This should log a warning');
 - `condition` is required and can be anything
 - `message` is an required string that will be passed onto `console.warn`
 
+## Why `tiny-warning`?
+
+The [`library: warning`](https://www.npmjs.com/package/warning) supports passing in arguments to the `warning` function in a sprintf style `(condition, format, a, b, c, d, e, f)`. It has internal logic to execute the sprintf substitutions. `tiny-warning` has dropped all of the sprintf logic. `tiny-warning` allows you to pass a single string message. With [template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) there is really no need for a custom message formatter to be built into the library. If you need a multi part message you can just do this: `warning(condition, 'Hello, ${name} - how are you today?')`
+
 ## Dropping your `warning` for kb savings!
 
 We recommend using [`babel-plugin-dev-expression`](https://www.npmjs.com/package/babel-plugin-dev-expression) to remove `warning` calls from your production build. This saves you kb's as well as avoids logging warnings to the console for production.
