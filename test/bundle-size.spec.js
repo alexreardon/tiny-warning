@@ -8,13 +8,13 @@ const PROD_SIZE = 180;
 
 const getCode = async ({ mode }): Promise<string> => {
   const bundle = await rollup({
-    input: './src/index.js',
+    input: 'src/index.js',
     output: {
       format: 'esm',
     },
     plugins: [
-      babel(),
       replace({ 'process.env.NODE_ENV': JSON.stringify(mode) }),
+      babel(),
     ],
   });
   const { code } = await bundle.generate({ format: 'esm' });
