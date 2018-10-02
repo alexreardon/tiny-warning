@@ -49,7 +49,7 @@ export default [
       // Setting development env before running babel etc
       replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
       babel(),
-      uglify(),
+      // uglify(),
     ],
   },
 ];
