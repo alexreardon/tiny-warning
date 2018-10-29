@@ -1,7 +1,7 @@
 // @flow
 const isProduction: boolean = process.env.NODE_ENV === 'production';
 
-export default (condition: mixed, message: string) => {
+export default function warning(condition: mixed, message: string) {
   // don't do anything in production
   // wrapping in production check for better dead code elimination
   if (!isProduction) {
@@ -12,4 +12,4 @@ export default (condition: mixed, message: string) => {
     // Condition not passed
     console.warn(message);
   }
-};
+}
