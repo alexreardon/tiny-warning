@@ -9,7 +9,13 @@ export default function warning(condition: mixed, message: string) {
     if (condition) {
       return;
     }
+
     // Condition not passed
-    console.warn(message);
+
+    // check console existance for IE support which provides console
+    // only with open devtools
+    if (typeof console !== 'undefined') {
+      console.warn(message);
+    }
   }
 }
