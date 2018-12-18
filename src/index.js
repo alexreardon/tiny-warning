@@ -15,7 +15,7 @@ export default function warning(condition: mixed, message: string) {
     // check console for IE9 support which provides console
     // only with open devtools
     if (typeof console !== 'undefined') {
-      console.warn(message);
+      console.warn('Warning: ' + message);
     }
     try {
       // --- Welcome to debugging React ---
