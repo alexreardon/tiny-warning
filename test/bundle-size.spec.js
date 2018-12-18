@@ -3,7 +3,7 @@ import { rollup } from 'rollup';
 import babel from 'rollup-plugin-babel';
 import replace from 'rollup-plugin-replace';
 
-const DEV_SIZE = 193;
+const DEV_SIZE = 251;
 const PROD_SIZE = 66;
 
 type GetCodeArgs = {|
