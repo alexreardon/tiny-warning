@@ -17,5 +17,11 @@ export default function warning(condition: mixed, message: string) {
     if (typeof console !== 'undefined') {
       console.warn(message);
     }
+    try {
+      // --- Welcome to debugging React ---
+      // This error was thrown as a convenience so that you can use this stack
+      // to find the callsite that caused this warning to fire.
+      throw Error(message);
+    } catch (x) {}
   }
 }
