@@ -24,7 +24,7 @@ it('should log a warning if the condition is falsy', () => {
     const message: string = `hey ${String(value)}`;
     warning(value, message);
 
-    expect(console.warn).toHaveBeenCalledWith(message);
+    expect(console.warn).toHaveBeenCalledWith('Warning: ' + message);
     console.warn.mockClear();
   });
 });
