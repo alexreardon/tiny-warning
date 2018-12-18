@@ -13,7 +13,7 @@ import warning from 'tiny-warning';
 warning(truthyValue, 'This should not log a warning');
 
 warning(falsyValue, 'This should log a warning');
-// console.warn('This should log a warning');
+// console.warn('Warning: This should log a warning');
 ```
 
 ## API: `(condition: mixed, message: string) => void`
