@@ -12,7 +12,7 @@ export default function warning(condition: mixed, message: string) {
 
     // Condition not passed
 
-    // check console existance for IE support which provides console
+    // check console for IE9 support which provides console
     // only with open devtools
     if (typeof console !== 'undefined') {
       console.warn(message);
@@ -20,7 +20,7 @@ export default function warning(condition: mixed, message: string) {
     try {
       // --- Welcome to debugging React ---
       // This error was thrown as a convenience so that you can use this stack
-      // to find the callsite that caused this warning to fire.
+      // to find the call site that caused this warning to fire.
       throw Error(message);
     } catch (x) {}
   }
