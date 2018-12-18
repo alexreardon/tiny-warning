@@ -11,17 +11,20 @@ export default function warning(condition: mixed, message: string) {
     }
 
     // Condition not passed
+    const text: string = `Warning: ${message}`;
 
     // check console for IE9 support which provides console
     // only with open devtools
     if (typeof console !== 'undefined') {
-      console.warn('Warning: ' + message);
+      console.warn(text);
     }
+
+    // Throwing an error and catching it immediately
+    // to improve debugging
+    // A consumer can use 'pause on caught exceptions'
+    // https://github.com/facebook/react/issues/4216
     try {
-      // --- Welcome to debugging React ---
-      // This error was thrown as a convenience so that you can use this stack
-      // to find the call site that caused this warning to fire.
-      throw Error(message);
+      throw Error(text);
     } catch (x) {}
   }
 }
