@@ -6,6 +6,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
+  // $ExpectError - mocked
   console.warn.mockRestore();
 });
 
@@ -25,6 +26,7 @@ it('should log a warning if the condition is falsy', () => {
     warning(value, message);
 
     expect(console.warn).toHaveBeenCalledWith('Warning: ' + message);
+    // $ExpectError - mocking console.warn
     console.warn.mockClear();
   });
 });

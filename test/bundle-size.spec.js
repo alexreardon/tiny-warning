@@ -20,8 +20,8 @@ const getCode = async ({ mode }: GetCodeArgs): Promise<string> => {
       babel(),
     ],
   });
-  const { code } = await bundle.generate({ format: 'esm' });
-  return code;
+  const result = await bundle.generate({ format: 'esm' });
+  return result.output[0].code;
 };
 
 it(`development mode size should be ${DEV_SIZE}`, async () => {
