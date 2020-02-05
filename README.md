@@ -19,7 +19,7 @@ warning(falsyValue, 'This should log a warning');
 ## API: `(condition: mixed, message: string) => void`
 
 - `condition` is required and can be anything
-- `message` is an required string that will be passed onto `console.warn`
+- `message` is a required string that will be passed onto `console.warn`
 
 ## Why `tiny-warning`?
 
