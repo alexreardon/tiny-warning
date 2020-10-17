@@ -1,5 +1,5 @@
 // @flow
-const isProduction: boolean = process.env.NODE_ENV === 'production';
+const isProduction: boolean = (typeof process !== 'undefined') && (process.env.NODE_ENV === 'production');
 
 export default function warning(condition: mixed, message: string): void {
   // don't do anything in production
