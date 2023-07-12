@@ -1,30 +1,11 @@
-import babel from 'rollup-plugin-babel';
-import replace from 'rollup-plugin-replace';
-import { uglify } from 'rollup-plugin-uglify';
-import pkg from './package.json';
+import typescript from '@rollup/plugin-typescript';
+import replace from '@rollup/plugin-replace';
+import { terser } from 'rollup-plugin-terser';
 
-const input = 'src/index.js';
+const input = 'src/tiny-warning.ts';
 
 export default [
-  // ESM build
-  {
-    input,
-    output: {
-      file: pkg.module,
-      format: 'esm',
-    },
-    plugins: [babel()],
-  },
-  // CommonJS build
-  {
-    input,
-    output: {
-      file: pkg.main,
-      format: 'cjs',
-    },
-    plugins: [babel()],
-  },
-  // UMD: Production build
+  // Universal module definition (UMD) build
   {
     input,
     output: {
@@ -32,12 +13,9 @@ export default [
       format: 'umd',
       name: 'warning',
     },
-    plugins: [
-      // Setting development env before running babel etc
-      replace({ 'process.env.NODE_ENV': JSON.stringify('development') }),
-      babel(),
-    ],
+    plugins: [typescript({ module: 'ESNext' })],
   },
+  // Universal module definition (UMD) build (production)
   {
     input,
     output: {
@@ -46,10 +24,51 @@ export default [
       name: 'warning',
     },
     plugins: [
-      // Setting development env before running babel etc
-      replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
-      babel(),
-      uglify(),
+      // Setting production env before running other steps
+      replace({ 'process.env.NODE_ENV': JSON.stringify('production'), preventAssignment: true }),
+      typescript({ module: 'ESNext' }),
+      terser(),
     ],
+  },
+  // ESM build
+  {
+    input,
+    output: {
+      file: 'dist/tiny-warning.esm.js',
+      format: 'esm',
+    },
+    plugins: [typescript({ module: 'ESNext' })],
+  },
+  // ESM build for "module": "node16" TypeScript projects (https://github.com/alexreardon/tiny-warning/issues/144)
+  {
+    input,
+    output: {
+      file: 'dist/esm/tiny-warning.js',
+      format: 'esm',
+    },
+    plugins: [
+      typescript({ module: 'ESNext' }),
+      // https://github.com/rollup/rollup/blob/69ff4181e701a0fe0026d0ba147f31bc86beffa8/build-plugins/emit-module-package-file.ts
+      {
+        generateBundle() {
+          this.emitFile({
+            fileName: 'package.json',
+            source: `{ "type": "module" }\n`,
+            type: 'asset',
+          });
+        },
+        name: 'emit-module-package-file',
+      },
+    ],
+  },
+  // CommonJS build
+  {
+    input,
+    output: {
+      file: 'dist/tiny-warning.cjs.js',
+      format: 'cjs',
+      exports: 'default',
+    },
+    plugins: [typescript({ module: 'ESNext' })],
   },
 ];
