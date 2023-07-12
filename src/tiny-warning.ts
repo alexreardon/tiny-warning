@@ -1,17 +1,18 @@
-// @flow
 const isProduction: boolean = process.env.NODE_ENV === 'production';
 
-export default function warning(condition: mixed, message: string): void {
+// Throw an error if the condition fails
+// Strip out error messages for production
+// > Not providing an inline default argument for message as the result is smaller
+export default function warning(condition: any, message: string): void {
   // don't do anything in production
   // wrapping in production check for better dead code elimination
   if (!isProduction) {
-    // condition passed: do not log
     if (condition) {
       return;
     }
 
     // Condition not passed
-    const text: string = `Warning: ${message}`;
+    const text: string = 'Warning: ' + message;
 
     // check console for IE9 support which provides console
     // only with open devtools
